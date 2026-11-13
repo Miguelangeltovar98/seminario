@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Backlog Ágil: aplicación CRUD para gestionar historias de usuario con criterios de aceptación." />
+  <title>Backlog Ágil · Gestor de historias de usuario</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="encabezado">
+    <div class="contenedor encabezado__contenido">
+      <div>
+        <h1 class="encabezado__titulo">Backlog Ágil</h1>
+        <p class="encabezado__subtitulo">Gestor de historias de usuario · CRUD con HTML, CSS, JavaScript y localStorage</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <!-- ===================== ESTADÍSTICAS (Read) ===================== -->
+    <section class="estadisticas" aria-label="Resumen del backlog">
+      <article class="estadistica">
+        <span class="estadistica__valor" id="stat-total">0</span>
+        <span class="estadistica__etiqueta">Historias</span>
+      </article>
+      <article class="estadistica">
+        <span class="estadistica__valor" id="stat-puntos">0</span>
+        <span class="estadistica__etiqueta">Puntos totales</span>
+      </article>
+      <article class="estadistica estadistica--pendiente">
+        <span class="estadistica__valor" id="stat-por-hacer">0</span>
+        <span class="estadistica__etiqueta">Por hacer</span>
+      </article>
+      <article class="estadistica estadistica--progreso">
+        <span class="estadistica__valor" id="stat-en-progreso">0</span>
+        <span class="estadistica__etiqueta">En progreso</span>
+      </article>
+      <article class="estadistica estadistica--hecho">
+        <span class="estadistica__valor" id="stat-hecho">0</span>
+        <span class="estadistica__etiqueta">Hecho</span>
+      </article>
+    </section>
+
+    <div class="diseno">
+      <!-- ===================== FORMULARIO (Create / Update) ===================== -->
+      <section class="panel panel--formulario" aria-labelledby="titulo-formulario">
+        <h2 class="panel__titulo" id="titulo-formulario">Nueva historia de usuario</h2>
+
+        <form id="formulario" novalidate>
+          <div class="campo">
+            <label for="titulo">Título <span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="text" id="titulo" name="titulo" maxlength="80" placeholder="Ej: Registro de usuarios" required />
+            <small class="campo__error" id="error-titulo"></small>
+          </div>
+
+          <fieldset class="historia-formato">
+            <legend>Formato de la historia</legend>
+
+            <div class="campo">
+              <label for="rol">Como… <span class="obligatorio" aria-hidden="true">*</span></label>
+              <input type="text" id="rol" name="rol" maxlength="60" placeholder="cliente nuevo" required />
+              <small class="campo__error" id="error-rol"></small>
+            </div>
+
+            <div class="campo">
+              <label for="accion">Quiero… <span class="obligatorio" aria-hidden="true">*</span></label>
+              <input type="text" id="accion" name="accion" maxlength="140" placeholder="crear una cuenta con mi correo" required />
+              <small class="campo__error" id="error-accion"></small>
+            </div>
+
+            <div class="campo">
+              <label for="beneficio">Para… <span class="obligatorio" aria-hidden="true">*</span></label>
+              <input type="text" id="beneficio" name="beneficio" maxlength="140" placeholder="guardar mis pedidos" required />
+              <small class="campo__error" id="error-beneficio"></small>
+            </div>
+          </fieldset>
+
+          <div class="campo">
+            <label for="criterios">Criterios de aceptación (Dado / Cuando / Entonces)</label>
+            <textarea id="criterios" name="criterios" rows="4" maxlength="800"
+              placeholder="Dado que estoy en el formulario de registro&#10;Cuando ingreso un correo válido y una contraseña&#10;Entonces mi cuenta se crea y veo un mensaje de bienvenida"></textarea>
+          </div>
+
+          <div class="campo-fila">
+            <div class="campo">
+              <label for="prioridad">Prioridad</label>
+              <select id="prioridad" name="prioridad">
+                <option value="Alta">Alta</option>
+                <option value="Media" selected>Media</option>
+                <option value="Baja">Baja</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="puntos">Puntos</label>
+              <select id="puntos" name="puntos">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="5">5</option>
+                <option value="8">8</option>
+                <option value="13">13</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="campo-fila">
+            <div class="campo">
+              <label for="estado">Estado</label>
+              <select id="estado" name="estado">
+                <option value="Por hacer" selected>Por hacer</option>
+                <option value="En progreso">En progreso</option>
+                <option value="Hecho">Hecho</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="responsable">Responsable</label>
+              <input type="text" id="responsable" name="responsable" maxlength="40" placeholder="Opcional" />
+            </div>
+          </div>
+
+          <div class="formulario__acciones">
+            <button type="submit" class="boton boton--primario" id="boton-guardar">Crear historia</button>
+            <button type="button" class="boton boton--secundario" id="boton-cancelar" hidden>Cancelar edición</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ===================== LISTADO (Read / Update / Delete) ===================== -->
+      <section class="panel panel--lista" aria-labelledby="titulo-lista">
+        <div class="lista__cabecera">
+          <h2 class="panel__titulo" id="titulo-lista">Backlog</h2>
+          <span class="lista__contador" id="contador-resultados"></span>
+        </div>
+
+        <div class="filtros" role="search">
+          <input type="search" id="buscar" placeholder="Buscar por título, rol o responsable…" aria-label="Buscar historias" />
+          <select id="filtro-estado" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option value="Por hacer">Por hacer</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Hecho">Hecho</option>
+          </select>
+          <select id="filtro-prioridad" aria-label="Filtrar por prioridad">
+            <option value="">Todas las prioridades</option>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
+        </div>
+
+        <!-- Aquí JavaScript dibuja las tarjetas de cada historia -->
+        <ul class="lista" id="lista-historias"></ul>
+
+        <!-- Se muestra cuando no hay historias guardadas -->
+        <div class="vacio" id="estado-vacio" hidden>
+          <p class="vacio__titulo">Tu backlog está vacío</p>
+          <p>Crea tu primera historia con el formulario o carga unos datos de ejemplo.</p>
+          <button type="button" class="boton boton--secundario" id="boton-ejemplos">Cargar ejemplos</button>
+        </div>
+
+        <!-- Se muestra cuando hay historias pero ninguna coincide con los filtros -->
+        <p class="sin-resultados" id="sin-resultados" hidden>No hay historias que coincidan con la búsqueda o los filtros.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      Seminario: Gestión de Software Ágil asistido por Inteligencia Artificial
+    </div>
+  </footer>
+
+  <!-- ===================== CONFIRMACIÓN DE ELIMINAR (Delete) ===================== -->
+  <dialog class="dialogo" id="dialogo-eliminar" aria-labelledby="dialogo-titulo">
+    <h3 id="dialogo-titulo">¿Eliminar esta historia?</h3>
+    <p>Vas a eliminar <strong id="dialogo-nombre"></strong>. Esta acción no se puede deshacer.</p>
+    <div class="dialogo__acciones">
+      <button type="button" class="boton boton--secundario" id="dialogo-cancelar">Cancelar</button>
+      <button type="button" class="boton boton--peligro" id="dialogo-confirmar">Sí, eliminar</button>
+    </div>
+  </dialog>
+
+  <!-- Mensajes cortos de confirmación (accesibles para lectores de pantalla) -->
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
