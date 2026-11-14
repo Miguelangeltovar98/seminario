@@ -208,9 +208,3 @@ prompts usados con qué se pidió y para qué.
 
 - La IA se usó como asistente: el código se revisó, se probó y se ajustó (nombres en español, validaciones, colores, orden de la lista, mensajes).
 - Se comprobó cada operación del CRUD con datos de prueba antes de entregar.
-- El equipo puede explicar cada parte del código; las funciones están comentadas para facilitarlo.
-
-## Integrantes
-
-- Miguel Ángel Tovar
-- _(agrega aquí a los demás integrantes)_
