@@ -177,7 +177,7 @@ puntos y cantidad por estado. Si no hay resultados, muestra un mensaje.
 ```
 Actúa como revisor de código. Revisa app.js y dime problemas de seguridad,
 errores posibles y partes que se puedan simplificar. En particular:
-- evita innerHTML con datos que escribe el usuario (riesgo de XSS),
+- evita index.HTML con datos que escribe el usuario (riesgo de XSS),
 - maneja el error si el JSON de localStorage está dañado,
 - evita títulos duplicados y valores fuera de las opciones permitidas,
 - pide confirmación antes de eliminar,
