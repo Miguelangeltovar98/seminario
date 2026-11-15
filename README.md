@@ -5,7 +5,7 @@ Aplicación web **CRUD** para crear, ver, editar y eliminar **historias de usuar
 Trabajo práctico del seminario **Gestión de Software Ágil asistido por Inteligencia Artificial**. Todo el desarrollo se guió con prompts de IA, que se listan al final de este documento.
 
 - **Demo en línea:** https://miguelangeltovar98.github.io/seminario/
-- **Video explicativo:** _(pega aquí el enlace del video m )_
+- **Video explicativo:** _(https://www.youtube.com/watch?v=q_7tzOKxDP8)_
 
 ---
 
