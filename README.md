@@ -186,24 +186,6 @@ Explica cada cambio y luego dame el código corregido.
 ```
 **Qué pedí y para qué:** mejorar la calidad del código generado y entender por qué se hace cada cambio, en lugar de aceptar la primera versión.
 
-### Prompt 8. Pruebas manuales
-```
-Convierte las historias y criterios de aceptación del primer prompt en una
-tabla de casos de prueba manuales para esta app: caso, pasos, datos de
-prueba y resultado esperado. Incluye crear, listar, editar, eliminar,
-cancelar la eliminación, recargar la página, buscar y validar campos vacíos.
-```
-**Qué pedí y para qué:** comprobar que todo el CRUD funciona antes de grabar el video.
-
-### Prompt 9. Documentación
-```
-Redacta el README.md del proyecto en español con: nombre, descripción
-breve, tecnologías, estructura de carpetas, instrucciones para ejecutarlo,
-capturas de pantalla, explicación de cada parte del CRUD y la lista de
-prompts usados con qué se pidió y para qué.
-```
-**Qué pedí y para qué:** documentar el proyecto según lo que pide la entrega.
-
 ## Uso responsable de la IA
 
 - La IA se usó como asistente: el código se revisó, se probó y se ajustó (nombres en español, validaciones, colores, orden de la lista, mensajes).
